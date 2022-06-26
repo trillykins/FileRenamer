@@ -5,29 +5,41 @@ namespace FileRenamer;
 
 public partial class MainPage : ContentPage
 {
+    private string _renameFileButtonText;
+
     public MainPage()
     {
         InitializeComponent();
+        _renameFileButtonText = RenameFilesButton.Text;
     }
 
-    private void OnCounterClicked(object sender, EventArgs e)
+    private void OnDirectoryClicked(object sender, EventArgs e)
     {
-        Debug.WriteLine(TrimTrailingWhitespace.IsToggled);
         ListFiles(SelectedDirectory.Text);
-        ModifyFiles(SelectedDirectory.Text);
+        ModifyFiles(SelectedDirectory.Text, false);
 
         SemanticScreenReader.Announce(OriginalFilenames.Text);
         SemanticScreenReader.Announce(ModifiedFilenames.Text);
     }
 
-    private void ModifyFiles(string path)
+    private void OnRenameFilesClicked(object sender, EventArgs e)
+    {
+        ListFiles(SelectedDirectory.Text);
+        ModifyFiles(SelectedDirectory.Text, true);
+
+        SemanticScreenReader.Announce(OriginalFilenames.Text);
+        SemanticScreenReader.Announce(ModifiedFilenames.Text);
+    }
+
+    // Spend effort moving this? meh maybe
+    private void ModifyFiles(string path, bool renameFiles)
     {
         if (path == null || !Directory.Exists(path))
         {
             Debug.WriteLine("Returning!");
             return;
         }
-        var filenames = new List<string>();
+        var filenames = new List<(string, string)>();
         foreach (var str in Directory.GetFiles(path))
         {
             var file = new FileInfo(str);
@@ -70,10 +82,32 @@ public partial class MainPage : ContentPage
                 newName = newName.TrimEnd();
             }
             newName = $"{newName}{file.Extension}";
-            filenames.Add(newName);
+            filenames.Add((file.FullName, newName));
         }
-        ModifiedFilenames.Text = string.Join(Environment.NewLine, filenames);
-        //File.Move(Path.Combine(path, file.FullName), Path.Combine(path, newName));
+        ModifiedFilenames.Text = string.Join(Environment.NewLine, filenames.Select(x => x.Item2));
+        // Block button
+        Debug.WriteLine(filenames.Select(x => x.Item2).Count());
+        Debug.WriteLine(filenames.Count);
+        var canRenameFiles = filenames.Select(x => x.Item2).Count() == filenames.Count;
+        Debug.WriteLine(canRenameFiles);
+        if (canRenameFiles)
+        {
+            RenameFilesButton.IsEnabled = true;
+            RenameFilesButton.Text = _renameFileButtonText;
+        }
+        else
+        {
+            RenameFilesButton.IsEnabled = false;
+            RenameFilesButton.Text = "Cannot rename with duplicate filenames!";
+        }
+
+        if (renameFiles && canRenameFiles)
+        {
+            foreach (var file in filenames)
+            {
+                //File.Move(Path.Combine(path, file.Item1), Path.Combine(path, file.Item2));
+            }
+        }
     }
 
     private void ListFiles(string path)

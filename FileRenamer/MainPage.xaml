@@ -9,30 +9,18 @@
             Padding="30,0" 
             VerticalOptions="Center">
 
-            <!--<Image
-                Source="dotnet_bot.png"
-                SemanticProperties.Description="Cute dot net bot waving hi to you!"
-                HeightRequest="200"
-                HorizontalOptions="Center" />-->
-
-            <!--<Label 
-                Text="Hello, World!"
-                SemanticProperties.HeadingLevel="Level1"
-                FontSize="32"
-                HorizontalOptions="Center" />-->
-
             <Grid RowDefinitions="auto" ColumnDefinitions="auto,*,auto">
 
                 <Label Grid.Row="0" Grid.Column="0"
                     Text="Directory"
                     SemanticProperties.HeadingLevel="Level2"
                     SemanticProperties.Description="Directory"
-                    FontSize="18" Padding="0, 0, 25, 2"
+                    FontSize="18" Padding="0, 0, 25, 0"
                     HorizontalOptions="Center" />
                 <Entry Grid.Row="0" Grid.Column="1" Text="F:\TV\Bob's Burgers\Bob's Burgers Season 12" x:Name="SelectedDirectory"/>
                 <Button Grid.Row="0" Grid.Column="2" Text="Select as directory"
-                    SemanticProperties.Hint="Counts the number of times you click"
-                    Clicked="OnCounterClicked"
+                    SemanticProperties.Hint="Refeshes directory"
+                    Clicked="OnDirectoryClicked"
                     HorizontalOptions="Center" />
 
             </Grid>
@@ -45,7 +33,7 @@
                     SemanticProperties.Description="RegEx"
                     FontSize="18" Padding="0, 0, 25, 0"
                     HorizontalOptions="Center" />
-                <Entry Grid.Row="0" Grid.Column="1" Text="([sS][0-9]+[eE][0-9]*)\w+" x:Name="RegExr" TextChanged="OnCounterClicked"/>
+                <Entry Grid.Row="0" Grid.Column="1" Text="([sS][0-9]+[eE][0-9]*)\w+" x:Name="RegExr" TextChanged="OnDirectoryClicked"/>
 
                 <Label Grid.Row="0" Grid.Column="2"
                     Text="Add After Regex"
@@ -53,7 +41,7 @@
                     SemanticProperties.Description="Add After Regex"
                     FontSize="18" Padding="25, 0, 25, 0"
                     HorizontalOptions="Center" />
-                <Entry Grid.Row="0" Grid.Column="3" x:Name="AddAfterRegex" TextChanged="OnCounterClicked"/>
+                <Entry Grid.Row="0" Grid.Column="3" x:Name="AddAfterRegex" TextChanged="OnDirectoryClicked"/>
             </Grid>
 
             <Grid RowDefinitions="auto" ColumnDefinitions="auto,*">
@@ -62,9 +50,9 @@
                     Text="RemoveFrom (including)"
                     SemanticProperties.HeadingLevel="Level2"
                     SemanticProperties.Description="RemoveFrom"
-                    FontSize="18" Padding="0, 0, 25, 2"
+                    FontSize="18" Padding="0, 0, 25, 0"
                     HorizontalOptions="Center" />
-                <Entry Grid.Row="0" Grid.Column="1" x:Name="RemoveFrom" TextChanged="OnCounterClicked"/>
+                <Entry Grid.Row="0" Grid.Column="1" x:Name="RemoveFrom" TextChanged="OnDirectoryClicked"/>
             </Grid>
 
             <Grid RowDefinitions="auto" ColumnDefinitions="auto,*">
@@ -73,7 +61,7 @@
                     Text="Trim Trailing Whitespace"
                     SemanticProperties.HeadingLevel="Level2"
                     SemanticProperties.Description="Trim Trailing Whitespace"
-                    FontSize="18" Padding="0, 0, 25, 2"
+                    FontSize="18" Padding="0, 0, 25, 0"
                     HorizontalOptions="Center" />
                 <Switch Grid.Row="0" Grid.Column="1" x:Name="TrimTrailingWhitespace"/>
             </Grid>
@@ -98,10 +86,10 @@
             </Grid>
 
             <Button 
-                x:Name="CounterBtn"
-                Text="Refresh"
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
+                x:Name="RenameFilesButton"
+                Text="Rename files!"
+                SemanticProperties.Hint="Rename files button"
+                Clicked="OnRenameFilesClicked"
                 HorizontalOptions="Center" />
 
         </VerticalStackLayout>
