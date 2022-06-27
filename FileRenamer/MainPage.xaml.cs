@@ -64,6 +64,10 @@ public partial class MainPage : ContentPage
             if (!string.IsNullOrEmpty(RemoveFrom.Text))
             {
                 var index = newName.IndexOf(RemoveFrom.Text);
+                if (CaseInsensitiveRemoveFrom.IsToggled)
+                {
+                    index = newName.IndexOf(RemoveFrom.Text, StringComparison.OrdinalIgnoreCase);
+                }
                 if (index != -1)
                 {
                     newName = file.Name.Remove(index);
@@ -138,7 +142,7 @@ public partial class MainPage : ContentPage
         {
             foreach (var file in filenames)
             {
-                //File.Move(Path.Combine(path, file.Item1), Path.Combine(path, file.Item2));
+                File.Move(Path.Combine(path, file.Item1), Path.Combine(path, file.Item2));
             }
             ListFiles(path);
         }
