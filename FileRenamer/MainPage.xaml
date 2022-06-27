@@ -17,7 +17,7 @@
                     SemanticProperties.Description="Directory"
                     FontSize="18" Padding="0, 0, 25, 0"
                     HorizontalOptions="Center" />
-                <Entry Grid.Row="0" Grid.Column="1" Text="F:\TV\Bob's Burgers\Bobs.Burgers.S12.1080p.HULU.WEBRip.DDP5.1.x264-NTb[rartv]" x:Name="SelectedDirectory"/>
+                <Entry Grid.Row="0" Grid.Column="1" Text="F:\TV\Bob's Burgers\Bobs.Burgers.S11.1080p.WEB-DL.x265.HEVC.OPUS-TCZ" x:Name="SelectedDirectory"/>
                 <Button Grid.Row="0" Grid.Column="2" Text="Select as directory"
                     SemanticProperties.Hint="Refeshes directory"
                     Clicked="OnDirectoryClicked"

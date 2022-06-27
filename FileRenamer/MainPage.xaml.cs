@@ -8,6 +8,17 @@ public partial class MainPage : ContentPage
     private readonly string _renameFileButtonText;
     private readonly IFolderPicker _folderPicker;
 
+    // < (less than)
+    // > (greater than)
+    // : (colon - sometimes works, but is actually NTFS Alternate Data Streams)
+    // " (double quote)
+    // / (forward slash)
+    // \ (backslash)
+    // | (vertical bar or pipe)
+    // ? (question mark)
+    // * (asterisk)
+    private readonly char[] _illegalCharacters = new char[] { '<', '>', ':', '"', '/', '\\', '|', '?', '*' };
+
     public MainPage(IFolderPicker folderPicker)
     {
         InitializeComponent();
@@ -98,23 +109,36 @@ public partial class MainPage : ContentPage
         }
 
         ModifiedFilenames.Text = string.Join(Environment.NewLine, filenames.Select(x => x.Item2));
+
         var canRenameFiles = filenames.Select(x => x.Item2).Distinct().Count() == filenames.Count;
         if (canRenameFiles)
         {
-            RenameFilesButton.IsEnabled = true;
-            RenameFilesButton.Text = _renameFileButtonText;
+            // Verify that no modified filenames contain illegal characters
+            if (filenames.Select(x => x.Item2).Any(x => _illegalCharacters.Any(c => x.Contains(c))))
+            {
+                RenameFilesButton.IsEnabled = false;
+                RenameFilesButton.Text = $"Cannot rename files containing illegal characters ({string.Join(" ", _illegalCharacters)})";
+                canRenameFiles = false;
+            }
+            else
+            {
+                RenameFilesButton.IsEnabled = true;
+                RenameFilesButton.Text = _renameFileButtonText;
+                canRenameFiles = true;
+            }
         }
         else
         {
             RenameFilesButton.IsEnabled = false;
             RenameFilesButton.Text = "Cannot rename with duplicate filenames!";
+            canRenameFiles = false;
         }
 
         if (renameFiles && canRenameFiles)
         {
             foreach (var file in filenames)
             {
-                File.Move(Path.Combine(path, file.Item1), Path.Combine(path, file.Item2));
+                //File.Move(Path.Combine(path, file.Item1), Path.Combine(path, file.Item2));
             }
             ListFiles(path);
         }
