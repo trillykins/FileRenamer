@@ -43,7 +43,7 @@ public partial class MainPage : ContentPage
         foreach (var str in Directory.GetFiles(path))
         {
             var file = new FileInfo(str);
-            var newName = file.Name;
+            var newName = file.Name.Substring(0, file.Name.Length - file.Extension.Length);
             if (!file.Exists) continue;
 
             if (!string.IsNullOrEmpty(RemoveFrom.Text))
@@ -70,17 +70,23 @@ public partial class MainPage : ContentPage
                 }
             }
 
-            //special cases
-            //if (file.FullName.ToLower().Contains("bobs") && file.FullName.ToLower().Contains("burgers"))
-            //{
-            //    newName = newName.Replace("Bobs", "Bob's");
-            //}
+            if (!string.IsNullOrEmpty(Replace.Text) && !string.IsNullOrEmpty(ReplaceWith.Text))
+            {
+                if (CaseInsensitive.IsToggled)
+                {
+                    newName = newName.Replace(Replace.Text, ReplaceWith.Text, StringComparison.OrdinalIgnoreCase);
+                }
+                else
+                {
+                    newName = newName.Replace(Replace.Text, ReplaceWith.Text);
+                }
+            }
 
-            newName = newName.Replace(".", " ");
             if (TrimTrailingWhitespace.IsToggled)
             {
                 newName = newName.TrimEnd();
             }
+
             newName = $"{newName}{file.Extension}";
             filenames.Add((file.FullName, newName));
         }
@@ -88,8 +94,8 @@ public partial class MainPage : ContentPage
         // Block button
         Debug.WriteLine(filenames.Select(x => x.Item2).Count());
         Debug.WriteLine(filenames.Count);
-        var canRenameFiles = filenames.Select(x => x.Item2).Count() == filenames.Count;
-        Debug.WriteLine(canRenameFiles);
+        var canRenameFiles = filenames.Select(x => x.Item2).Distinct().Count() == filenames.Count;
+        Debug.WriteLine($"{nameof(canRenameFiles)}: {canRenameFiles}");
         if (canRenameFiles)
         {
             RenameFilesButton.IsEnabled = true;
@@ -125,6 +131,11 @@ public partial class MainPage : ContentPage
             filenames.Add(file.Name);
         }
         OriginalFilenames.Text = string.Join(Environment.NewLine, filenames);
+    }
+
+    private void TrimTrailingWhitespace_Toggled(object sender, ToggledEventArgs e)
+    {
+
     }
 }
 
