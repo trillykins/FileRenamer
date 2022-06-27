@@ -116,6 +116,7 @@ public partial class MainPage : ContentPage
             {
                 File.Move(Path.Combine(path, file.Item1), Path.Combine(path, file.Item2));
             }
+            ListFiles(path);
         }
     }
 
