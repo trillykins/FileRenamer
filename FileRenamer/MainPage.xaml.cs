@@ -47,7 +47,7 @@ public partial class MainPage : ContentPage
         foreach (var str in Directory.GetFiles(path))
         {
             var file = new FileInfo(str);
-            var newName = file.Name.Substring(0, file.Name.Length - file.Extension.Length);
+            var newName = file.Name[..^file.Extension.Length];
             if (!file.Exists) continue;
 
             if (!string.IsNullOrEmpty(RemoveFrom.Text))
@@ -61,16 +61,18 @@ public partial class MainPage : ContentPage
 
             if (!string.IsNullOrEmpty(RegExr.Text) && !string.IsNullOrEmpty(AddAfterRegex.Text))
             {
-                var regex = new Regex(RegExr.Text);
-                var regexMatch = regex.Match(newName);
-                if (regexMatch.Success)
+                try
                 {
-                    var index = file.Name.IndexOf(regexMatch.Value);
-                    if (index != -1)
+                    var regex = new Regex(RegExr.Text);
+                    var regexMatch = regex.Match(newName);
+                    if (regexMatch.Success)
                     {
-                        index += regexMatch.Value.Length;
-                        newName = newName.Insert(index, AddAfterRegex.Text);
+                        newName = newName.Insert(regexMatch.Index + regexMatch.Value.Length, AddAfterRegex.Text);
                     }
+                }
+                catch (ArgumentException e)
+                {
+                    Debug.WriteLine($"Invalid regex: {e.Message}");
                 }
             }
 
@@ -112,7 +114,7 @@ public partial class MainPage : ContentPage
         {
             foreach (var file in filenames)
             {
-                //File.Move(Path.Combine(path, file.Item1), Path.Combine(path, file.Item2));
+                File.Move(Path.Combine(path, file.Item1), Path.Combine(path, file.Item2));
             }
         }
     }

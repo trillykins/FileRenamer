@@ -17,7 +17,7 @@
                     SemanticProperties.Description="Directory"
                     FontSize="18" Padding="0, 0, 25, 0"
                     HorizontalOptions="Center" />
-                <Entry Grid.Row="0" Grid.Column="1" Text="C:\Users\mp\source\repos\IntelliTracker" x:Name="SelectedDirectory"/>
+                <Entry Grid.Row="0" Grid.Column="1" Text="F:\TV\Bob's Burgers\Bobs.Burgers.S12.1080p.HULU.WEBRip.DDP5.1.x264-NTb[rartv]" x:Name="SelectedDirectory"/>
                 <Button Grid.Row="0" Grid.Column="2" Text="Select as directory"
                     SemanticProperties.Hint="Refeshes directory"
                     Clicked="OnDirectoryClicked"
@@ -28,6 +28,24 @@
                     Clicked="OnPickFolderClicked"
                     HorizontalOptions="Center" />
 
+            </Grid>
+
+            <Label Text="Evaluated in descending order"
+                SemanticProperties.HeadingLevel="Level2"
+                SemanticProperties.Description="Evaluated in descending order"
+                FontSize="14"
+                Padding="0, 0, 0, 0"
+                HorizontalOptions="Center" />
+
+            <Grid RowDefinitions="auto" ColumnDefinitions="auto,*">
+
+                <Label Grid.Row="0" Grid.Column="0"
+                    Text="Remove From Filename (including)"
+                    SemanticProperties.HeadingLevel="Level2"
+                    SemanticProperties.Description="Remove From"
+                    FontSize="18" Padding="0, 0, 25, 0"
+                    HorizontalOptions="Center" />
+                <Entry Grid.Row="0" Grid.Column="1" x:Name="RemoveFrom" TextChanged="OnDirectoryClicked"/>
             </Grid>
 
             <Grid RowDefinitions="auto" ColumnDefinitions="auto,*,auto,*">
@@ -49,17 +67,6 @@
                 <Entry Grid.Row="0" Grid.Column="3" x:Name="AddAfterRegex" TextChanged="OnDirectoryClicked"/>
             </Grid>
 
-            <Grid RowDefinitions="auto" ColumnDefinitions="auto,*">
-
-                <Label Grid.Row="0" Grid.Column="0"
-                    Text="RemoveFrom (including)"
-                    SemanticProperties.HeadingLevel="Level2"
-                    SemanticProperties.Description="RemoveFrom"
-                    FontSize="18" Padding="0, 0, 25, 0"
-                    HorizontalOptions="Center" />
-                <Entry Grid.Row="0" Grid.Column="1" x:Name="RemoveFrom" TextChanged="OnDirectoryClicked"/>
-            </Grid>
-
             <Grid RowDefinitions="auto" ColumnDefinitions="auto,*,auto,*,auto,auto">
 
                 <Label Grid.Row="0" Grid.Column="0"
@@ -74,7 +81,7 @@
                     Text="With"
                     SemanticProperties.HeadingLevel="Level2"
                     SemanticProperties.Description="With"
-                    FontSize="18" Padding="0, 0, 25, 0"
+                    FontSize="18" Padding="15, 0, 15, 0"
                     HorizontalOptions="Center" />
                 <Entry Grid.Row="0" Grid.Column="3" x:Name="ReplaceWith" TextChanged="OnDirectoryClicked"/>
 
@@ -82,7 +89,7 @@
                     Text="Case Insensitive"
                     SemanticProperties.HeadingLevel="Level2"
                     SemanticProperties.Description="Case Insensitive"
-                    FontSize="18" Padding="0, 0, 25, 0"
+                    FontSize="18" Padding="25, 0, 25, 0"
                     HorizontalOptions="Center" />
                 <Switch Grid.Row="0" Grid.Column="5" x:Name="CaseInsensitive" Toggled="OnDirectoryClicked"/>
             </Grid>
@@ -114,7 +121,7 @@
                     SemanticProperties.Description="Modified"
                     FontSize="18" Padding="0, 0, 0, 10"
                     HorizontalOptions="Center" />
-                <Editor Grid.Row="1" Grid.Column="1" IsReadOnly="False" AutoSize="TextChanges" x:Name="ModifiedFilenames"></Editor>
+                <Editor Grid.Row="1" Grid.Column="1" IsReadOnly="True" AutoSize="TextChanges" x:Name="ModifiedFilenames"></Editor>
             </Grid>
 
             <Button 
