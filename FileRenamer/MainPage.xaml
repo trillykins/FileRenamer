@@ -17,7 +17,7 @@
                     SemanticProperties.Description="Directory"
                     FontSize="18" Padding="0, 0, 25, 0"
                     HorizontalOptions="Center" />
-                <Entry Grid.Row="0" Grid.Column="1" Text="F:\TV\Bob's Burgers\Bob's Burgers Season 12" x:Name="SelectedDirectory"/>
+                <Entry Grid.Row="0" Grid.Column="1" Text="C:\Users\mp\source\repos\IntelliTracker" x:Name="SelectedDirectory"/>
                 <Button Grid.Row="0" Grid.Column="2" Text="Select as directory"
                     SemanticProperties.Hint="Refeshes directory"
                     Clicked="OnDirectoryClicked"
@@ -55,6 +55,33 @@
                 <Entry Grid.Row="0" Grid.Column="1" x:Name="RemoveFrom" TextChanged="OnDirectoryClicked"/>
             </Grid>
 
+            <Grid RowDefinitions="auto" ColumnDefinitions="auto,*,auto,*,auto,auto">
+
+                <Label Grid.Row="0" Grid.Column="0"
+                    Text="Replace"
+                    SemanticProperties.HeadingLevel="Level2"
+                    SemanticProperties.Description="Replace"
+                    FontSize="18" Padding="0, 0, 25, 0"
+                    HorizontalOptions="Center" />
+                <Entry Grid.Row="0" Grid.Column="1" x:Name="Replace" TextChanged="OnDirectoryClicked"/>
+
+                <Label Grid.Row="0" Grid.Column="2"
+                    Text="With"
+                    SemanticProperties.HeadingLevel="Level2"
+                    SemanticProperties.Description="With"
+                    FontSize="18" Padding="0, 0, 25, 0"
+                    HorizontalOptions="Center" />
+                <Entry Grid.Row="0" Grid.Column="3" x:Name="ReplaceWith" TextChanged="OnDirectoryClicked"/>
+
+                <Label Grid.Row="0" Grid.Column="4"
+                    Text="Case Insensitive"
+                    SemanticProperties.HeadingLevel="Level2"
+                    SemanticProperties.Description="Case Insensitive"
+                    FontSize="18" Padding="0, 0, 25, 0"
+                    HorizontalOptions="Center" />
+                <Switch Grid.Row="0" Grid.Column="5" x:Name="CaseInsensitive" Toggled="OnDirectoryClicked"/>
+            </Grid>
+
             <Grid RowDefinitions="auto" ColumnDefinitions="auto,*">
 
                 <Label Grid.Row="0" Grid.Column="0"
@@ -63,7 +90,7 @@
                     SemanticProperties.Description="Trim Trailing Whitespace"
                     FontSize="18" Padding="0, 0, 25, 0"
                     HorizontalOptions="Center" />
-                <Switch Grid.Row="0" Grid.Column="1" x:Name="TrimTrailingWhitespace"/>
+                <Switch Grid.Row="0" Grid.Column="1" x:Name="TrimTrailingWhitespace" Toggled="OnDirectoryClicked"/>
             </Grid>
 
             <Grid RowDefinitions="auto, auto" ColumnDefinitions="*,*">
