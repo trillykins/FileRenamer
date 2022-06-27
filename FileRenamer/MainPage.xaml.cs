@@ -5,27 +5,31 @@ namespace FileRenamer;
 
 public partial class MainPage : ContentPage
 {
-    private string _renameFileButtonText;
+    private readonly string _renameFileButtonText;
+    private readonly IFolderPicker _folderPicker;
 
-    public MainPage()
+    public MainPage(IFolderPicker folderPicker)
     {
         InitializeComponent();
         _renameFileButtonText = RenameFilesButton.Text;
+        _folderPicker = folderPicker;
     }
 
     private void OnDirectoryClicked(object sender, EventArgs e)
     {
-        ListFiles(SelectedDirectory.Text);
-        ModifyFiles(SelectedDirectory.Text, false);
-
-        SemanticScreenReader.Announce(OriginalFilenames.Text);
-        SemanticScreenReader.Announce(ModifiedFilenames.Text);
+        DoTheThings(false);
     }
 
     private void OnRenameFilesClicked(object sender, EventArgs e)
     {
+        DoTheThings(true);
+    }
+
+    // TODO: rename and refactor
+    private void DoTheThings(bool renameFiles)
+    {
         ListFiles(SelectedDirectory.Text);
-        ModifyFiles(SelectedDirectory.Text, true);
+        ModifyFiles(SelectedDirectory.Text, renameFiles);
 
         SemanticScreenReader.Announce(OriginalFilenames.Text);
         SemanticScreenReader.Announce(ModifiedFilenames.Text);
@@ -90,12 +94,9 @@ public partial class MainPage : ContentPage
             newName = $"{newName}{file.Extension}";
             filenames.Add((file.FullName, newName));
         }
+
         ModifiedFilenames.Text = string.Join(Environment.NewLine, filenames.Select(x => x.Item2));
-        // Block button
-        Debug.WriteLine(filenames.Select(x => x.Item2).Count());
-        Debug.WriteLine(filenames.Count);
         var canRenameFiles = filenames.Select(x => x.Item2).Distinct().Count() == filenames.Count;
-        Debug.WriteLine($"{nameof(canRenameFiles)}: {canRenameFiles}");
         if (canRenameFiles)
         {
             RenameFilesButton.IsEnabled = true;
@@ -133,9 +134,13 @@ public partial class MainPage : ContentPage
         OriginalFilenames.Text = string.Join(Environment.NewLine, filenames);
     }
 
-    private void TrimTrailingWhitespace_Toggled(object sender, ToggledEventArgs e)
+    private async void OnPickFolderClicked(object sender, EventArgs e)
     {
+        var pickedFolder = await _folderPicker.PickFolder();
+        SelectedDirectory.Text = pickedFolder;
 
+        SemanticScreenReader.Announce(SelectedDirectory.Text);
+        DoTheThings(false);
     }
 }
 

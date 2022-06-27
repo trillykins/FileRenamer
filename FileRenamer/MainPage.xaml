@@ -9,7 +9,7 @@
             Padding="30,0" 
             VerticalOptions="Center">
 
-            <Grid RowDefinitions="auto" ColumnDefinitions="auto,*,auto">
+            <Grid RowDefinitions="auto" ColumnDefinitions="auto,*,auto,auto">
 
                 <Label Grid.Row="0" Grid.Column="0"
                     Text="Directory"
@@ -21,6 +21,11 @@
                 <Button Grid.Row="0" Grid.Column="2" Text="Select as directory"
                     SemanticProperties.Hint="Refeshes directory"
                     Clicked="OnDirectoryClicked"
+                    HorizontalOptions="Center" />
+                <Button Grid.Row="0" Grid.Column="3"  
+                    Text="Directory Picker"
+                    SemanticProperties.Hint="Allows you to pick a folder on the filesystem"
+                    Clicked="OnPickFolderClicked"
                     HorizontalOptions="Center" />
 
             </Grid>
