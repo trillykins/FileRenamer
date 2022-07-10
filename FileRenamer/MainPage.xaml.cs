@@ -91,15 +91,15 @@ public partial class MainPage : ContentPage
                 }
             }
 
-            if (!string.IsNullOrEmpty(Replace.Text) && !string.IsNullOrEmpty(ReplaceWith.Text))
+            if (!string.IsNullOrEmpty(Replace.Text))
             {
                 if (CaseInsensitive.IsToggled)
                 {
-                    newName = newName.Replace(Replace.Text, ReplaceWith.Text, StringComparison.OrdinalIgnoreCase);
+                    newName = newName.Replace(Replace.Text, ReplaceWith.Text ?? "", StringComparison.OrdinalIgnoreCase);
                 }
                 else
                 {
-                    newName = newName.Replace(Replace.Text, ReplaceWith.Text);
+                    newName = newName.Replace(Replace.Text, ReplaceWith.Text ?? "");
                 }
             }
 
