@@ -1,4 +1,5 @@
-﻿//using CommunityToolkit.Maui;
+﻿using CommunityToolkit.Maui;
+using Microsoft.Extensions.Logging;
 
 namespace FileRenamer;
 
@@ -9,19 +10,17 @@ public static class MauiProgram
 		var builder = MauiApp.CreateBuilder();
 		builder
 			.UseMauiApp<App>()
-            //.UseMauiCommunityToolkit()
-            .ConfigureFonts(fonts =>
+			.UseMauiCommunityToolkit()
+			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			});
 
-#if WINDOWS
-        builder.Services.AddTransient<IFolderPicker, Platforms.Windows.FolderPicker>();
+#if DEBUG
+		builder.Logging.AddDebug();
 #endif
-        builder.Services.AddTransient<MainPage>();
-        builder.Services.AddTransient<App>();
 
-        return builder.Build();
+		return builder.Build();
 	}
 }

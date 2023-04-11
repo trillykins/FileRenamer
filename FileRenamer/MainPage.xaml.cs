@@ -1,15 +1,13 @@
 ﻿using System.Diagnostics;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Threading;
-using Microsoft.Maui.Controls.PlatformConfiguration;
+using CommunityToolkit.Maui.Storage;
 
 namespace FileRenamer;
 
 public partial class MainPage : ContentPage
 {
     private readonly string _renameFileButtonText;
-    private readonly IFolderPicker _folderPicker;
 
     // < (less than)
     // > (greater than)
@@ -22,12 +20,12 @@ public partial class MainPage : ContentPage
     // * (asterisk)
     private readonly char[] _illegalCharacters = new char[] { '<', '>', ':', '"', '/', '\\', '|', '?', '*' };
 
-    public MainPage(IFolderPicker folderPicker)
+    public MainPage()
     {
         InitializeComponent();
         _renameFileButtonText = RenameFilesButton.Text;
-        _folderPicker = folderPicker;
     }
+
 
     private void OnDirectoryClicked(object sender, EventArgs e)
     {
@@ -175,12 +173,17 @@ public partial class MainPage : ContentPage
 
     private async void OnPickFolderClicked(object sender, EventArgs e)
     {
-        var pickedFolder = await _folderPicker.PickFolder();
-        if (pickedFolder == string.Empty) return;
-        SelectedDirectory.Text = pickedFolder;
+        var path = SelectedDirectory.Text + "\\";
+        path = path.Replace("\\", "/");
+        Debug.WriteLine(path);
+        var result = await FolderPicker.PickAsync(path, CancellationToken.None);
+        if (result.IsSuccessful)
+        {
+            SelectedDirectory.Text = result.Folder.Path;
+            SemanticScreenReader.Announce(SelectedDirectory.Text);
+            DoTheThings(false);
+        }
 
-        SemanticScreenReader.Announce(SelectedDirectory.Text);
-        DoTheThings(false);
     }
 }
 
