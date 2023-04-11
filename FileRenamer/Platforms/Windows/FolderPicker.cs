@@ -18,7 +18,7 @@ namespace FileRenamer.Platforms.Windows
             WinRT.Interop.InitializeWithWindow.Initialize(folderPicker, hwnd);
 
             var result = await folderPicker.PickSingleFolderAsync();
-
+            if (result == null) return string.Empty;
             return result.Path;
         }
     }

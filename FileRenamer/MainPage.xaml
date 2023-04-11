@@ -102,15 +102,25 @@
                 <Switch Grid.Row="0" Grid.Column="5" x:Name="CaseInsensitive" Toggled="OnDirectoryClicked"/>
             </Grid>
 
-            <Grid RowDefinitions="auto" ColumnDefinitions="auto,*">
-
+            <Grid RowDefinitions="auto" ColumnDefinitions="auto,auto,auto,*">
                 <Label Grid.Row="0" Grid.Column="0"
+                    Text="Trim Leading Whitespace"
+                    SemanticProperties.HeadingLevel="Level2"
+                    SemanticProperties.Description="Trim Leading Whitespace"
+                    FontSize="18" Padding="0, 0, 25, 0"
+                    HorizontalOptions="Center" />
+                <Switch Grid.Row="0" Grid.Column="1" x:Name="TrimLeadingWhitespace" Toggled="OnDirectoryClicked"/>
+
+                <Label Grid.Row="0" Grid.Column="2"
                     Text="Trim Trailing Whitespace"
                     SemanticProperties.HeadingLevel="Level2"
                     SemanticProperties.Description="Trim Trailing Whitespace"
                     FontSize="18" Padding="0, 0, 25, 0"
                     HorizontalOptions="Center" />
-                <Switch Grid.Row="0" Grid.Column="1" x:Name="TrimTrailingWhitespace" Toggled="OnDirectoryClicked"/>
+                <Switch Grid.Row="0" Grid.Column="3" x:Name="TrimTrailingWhitespace" Toggled="OnDirectoryClicked"/>
+            </Grid>
+
+            <Grid RowDefinitions="auto" ColumnDefinitions="auto,*">
             </Grid>
 
             <Grid RowDefinitions="auto, auto" ColumnDefinitions="*,*">

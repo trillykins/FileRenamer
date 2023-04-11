@@ -1,5 +1,8 @@
 ﻿using System.Diagnostics;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using System.Threading;
+using Microsoft.Maui.Controls.PlatformConfiguration;
 
 namespace FileRenamer;
 
@@ -103,6 +106,11 @@ public partial class MainPage : ContentPage
                 }
             }
 
+            if (TrimLeadingWhitespace.IsToggled)
+            {
+                newName = newName.TrimStart();
+            }
+
             if (TrimTrailingWhitespace.IsToggled)
             {
                 newName = newName.TrimEnd();
@@ -168,6 +176,7 @@ public partial class MainPage : ContentPage
     private async void OnPickFolderClicked(object sender, EventArgs e)
     {
         var pickedFolder = await _folderPicker.PickFolder();
+        if (pickedFolder == string.Empty) return;
         SelectedDirectory.Text = pickedFolder;
 
         SemanticScreenReader.Announce(SelectedDirectory.Text);
